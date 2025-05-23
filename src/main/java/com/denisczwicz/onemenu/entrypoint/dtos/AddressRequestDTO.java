@@ -1,6 +1,9 @@
-package com.denisczwicz.onemenu.domain.model;
+package com.denisczwicz.onemenu.entrypoint.dtos;
 
-public record AddressModel(
+import lombok.Builder;
+
+@Builder
+public record AddressRequestDTO(
         String street,
         String number,
         String city,
