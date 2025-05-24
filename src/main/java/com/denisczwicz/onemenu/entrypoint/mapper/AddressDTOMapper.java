@@ -4,6 +4,8 @@ import com.denisczwicz.onemenu.domain.model.AddressModel;
 import com.denisczwicz.onemenu.entrypoint.dtos.AddressRequestDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class AddressDTOMapper {
 

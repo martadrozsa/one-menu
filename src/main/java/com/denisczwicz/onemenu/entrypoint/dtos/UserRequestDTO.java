@@ -2,13 +2,15 @@ package com.denisczwicz.onemenu.entrypoint.dtos;
 
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Builder
 public record UserRequestDTO(
         String name,
         String email,
         String login,
         String password,
-        String lastUpdate,
+        LocalDateTime lastUpdate,
         AddressRequestDTO address
 ) {
     public UserRequestDTO {

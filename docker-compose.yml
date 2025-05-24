@@ -10,6 +10,6 @@ services:
       - ./docker/mysql/data:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: testdb
-        MYSQL_USER: user
+        MYSQL_DATABASE: one-menu
+        MYSQL_USER: root
         MYSQL_PASSWORD: password

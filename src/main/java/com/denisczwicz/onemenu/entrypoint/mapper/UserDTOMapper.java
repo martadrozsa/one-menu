@@ -5,12 +5,13 @@ import com.denisczwicz.onemenu.entrypoint.dtos.UserRequestDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Component
 public class UserDTOMapper {
 
     private final AddressDTOMapper addressDTOMapper;
-
 
     public UserModel toModel(UserRequestDTO userRequestDTO) {
         return new UserModel(

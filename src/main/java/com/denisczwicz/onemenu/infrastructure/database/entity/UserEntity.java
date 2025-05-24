@@ -5,17 +5,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+@Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user")
 public class UserEntity {
 
     @Id
@@ -26,9 +32,9 @@ public class UserEntity {
     private String email;
     private String login;
     private String password;
-    private String lastUpdate;
+    private LocalDateTime lastUpdate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AddressEntity> addresses;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AddressEntity address;
 
 }
