@@ -1,5 +1,6 @@
 package com.denisczwicz.onemenu.infrastructure.mapper;
 
+import com.denisczwicz.onemenu.domain.model.AddressModel;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.infrastructure.database.entity.AddressEntity;
 import com.denisczwicz.onemenu.infrastructure.database.entity.UserEntity;
@@ -29,4 +30,16 @@ public class UserMapper {
 
         return userEntity;
     }
+
+    public UserModel toModel(UserEntity userEntity) {
+        return new UserModel(
+                userEntity.getName(),
+                userEntity.getEmail(),
+                userEntity.getLogin(),
+                userEntity.getPassword(),
+                addressMapper.toModel(userEntity.getAddress())
+        );
+    }
+
+
 }

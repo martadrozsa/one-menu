@@ -1,8 +1,6 @@
-package com.denisczwicz.onemenu.entrypoint.dtos;
+package com.denisczwicz.onemenu.entrypoint.dtos.request;
 
 import lombok.Builder;
-
-import java.time.LocalDateTime;
 
 @Builder
 public record UserRequestDTO(

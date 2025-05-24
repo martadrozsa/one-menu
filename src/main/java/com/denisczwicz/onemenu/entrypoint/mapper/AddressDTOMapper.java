@@ -1,10 +1,8 @@
 package com.denisczwicz.onemenu.entrypoint.mapper;
 
 import com.denisczwicz.onemenu.domain.model.AddressModel;
-import com.denisczwicz.onemenu.entrypoint.dtos.AddressRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.AddressRequestDTO;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class AddressDTOMapper {
@@ -18,6 +16,17 @@ public class AddressDTOMapper {
                 addressRequestDTO.state(),
                 addressRequestDTO.country(),
                 addressRequestDTO.postalCode()
+        );
+    }
+
+    public AddressRequestDTO toRequestDTO(AddressModel addressModel) {
+        return new AddressRequestDTO(
+                addressModel.street(),
+                addressModel.number(),
+                addressModel.city(),
+                addressModel.state(),
+                addressModel.country(),
+                addressModel.postalCode()
         );
     }
 }

@@ -17,4 +17,15 @@ public class AddressMapper {
                 .postalCode(addressModel.postalCode())
                 .build();
     }
+
+    public AddressModel toModel(AddressEntity addressEntity) {
+        return new AddressModel(
+                addressEntity.getStreet(),
+                addressEntity.getNumber(),
+                addressEntity.getCity(),
+                addressEntity.getState(),
+                addressEntity.getCountry(),
+                addressEntity.getPostalCode()
+        );
+    }
 }

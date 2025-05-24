@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class UserGatewayRepository implements UserGatewayPort {
@@ -20,11 +22,16 @@ public class UserGatewayRepository implements UserGatewayPort {
     @Transactional
     @Override
     public void createUser(UserModel userModel) {
-
-
         UserEntity userEntity = userMapper.toEntity(userModel);
-
         userRepository.save(userEntity);
-
     }
+
+    @Override
+    public List<UserModel> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toModel)
+                .toList();
+    }
+
 }
