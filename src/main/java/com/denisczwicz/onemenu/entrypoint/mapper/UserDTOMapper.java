@@ -19,7 +19,6 @@ public class UserDTOMapper {
                 userRequestDTO.email(),
                 userRequestDTO.password(),
                 userRequestDTO.login(),
-                userRequestDTO.lastUpdate(),
                 userRequestDTO.address() != null ? addressDTOMapper.toModel(userRequestDTO.address()) : null);
     }
 }

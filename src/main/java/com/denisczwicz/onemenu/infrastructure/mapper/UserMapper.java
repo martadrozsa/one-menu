@@ -22,7 +22,6 @@ public class UserMapper {
                 .email(userModel.email())
                 .password(userModel.password())
                 .login(userModel.login())
-                .lastUpdate(userModel.lastUpdate())
                 .address(addressEntity)
                 .build();
 

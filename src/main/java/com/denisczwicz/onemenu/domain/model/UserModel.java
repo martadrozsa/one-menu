@@ -8,7 +8,6 @@ public record UserModel(
         String email,
         String login,
         String password,
-        LocalDateTime lastUpdate,
         AddressModel address
         //private UserRole role;
 

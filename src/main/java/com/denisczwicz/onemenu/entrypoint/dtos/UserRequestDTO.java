@@ -10,7 +10,6 @@ public record UserRequestDTO(
         String email,
         String login,
         String password,
-        LocalDateTime lastUpdate,
         AddressRequestDTO address
 ) {
     public UserRequestDTO {

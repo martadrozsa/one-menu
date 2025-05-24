@@ -1,6 +1,7 @@
 package com.denisczwicz.onemenu.infrastructure.database.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
+@EntityListeners(AuditingEntityListener.class)
 public class UserEntity {
 
     @Id
@@ -32,6 +36,8 @@ public class UserEntity {
     private String email;
     private String login;
     private String password;
+
+    @LastModifiedDate
     private LocalDateTime lastUpdate;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
