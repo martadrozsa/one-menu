@@ -51,4 +51,11 @@ public class UserGatewayRepository implements UserGatewayPort {
                 .orElse(null);
     }
 
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.findById(id)
+                .ifPresent(userRepository::delete);
+
+    }
+
 }

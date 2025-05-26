@@ -14,4 +14,6 @@ public interface UserGatewayPort {
 
     UserModel updateUser(UserModel userModel, Long id);
 
+    void deleteUser(Long id);
+
 }
