@@ -12,4 +12,6 @@ public interface UserGatewayPort {
 
     UserModel getUserById(Long id);
 
+    UserModel updateUser(UserModel userModel, Long id);
+
 }

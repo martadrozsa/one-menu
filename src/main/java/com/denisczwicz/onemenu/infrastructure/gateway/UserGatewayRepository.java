@@ -3,7 +3,6 @@ package com.denisczwicz.onemenu.infrastructure.gateway;
 import com.denisczwicz.onemenu.application.port.UserGatewayPort;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.infrastructure.database.UserRepository;
-import com.denisczwicz.onemenu.infrastructure.database.entity.AddressEntity;
 import com.denisczwicz.onemenu.infrastructure.database.entity.UserEntity;
 import com.denisczwicz.onemenu.infrastructure.mapper.UserMapper;
 import jakarta.transaction.Transactional;
@@ -38,6 +37,17 @@ public class UserGatewayRepository implements UserGatewayPort {
     public UserModel getUserById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::toModel)
+                .orElse(null);
+    }
+
+    @Override
+    public UserModel updateUser(UserModel userModel, Long id) {
+        return userRepository.findById(id)
+                .map(existingUser -> {
+                    UserEntity updatedUser = userMapper.toEntity(userModel);
+                    updatedUser.setId(existingUser.getId()); // Ensure the ID remains the same
+                    return userMapper.toModel(userRepository.save(updatedUser));
+                })
                 .orElse(null);
     }
 
