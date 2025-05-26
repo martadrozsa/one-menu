@@ -10,4 +10,6 @@ public interface UserGatewayPort {
 
     List<UserModel> getAllUsers();
 
+    UserModel getUserById(Long id);
+
 }

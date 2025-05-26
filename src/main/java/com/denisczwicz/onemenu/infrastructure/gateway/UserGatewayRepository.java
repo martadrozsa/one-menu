@@ -34,4 +34,11 @@ public class UserGatewayRepository implements UserGatewayPort {
                 .toList();
     }
 
+    @Override
+    public UserModel getUserById(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toModel)
+                .orElse(null);
+    }
+
 }
