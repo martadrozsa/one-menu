@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddressGatewayRepository implements AddressGatewayPort {
 
-
     @Override
     public void createAddress(AddressModel addressModel) {
 
