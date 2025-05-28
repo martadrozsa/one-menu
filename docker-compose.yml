@@ -6,10 +6,6 @@ services:
     container_name: mysql
     ports:
         - "3306:3306"
-    volumes:
-      - ./docker/mysql/data:/var/lib/mysql
     environment:
-        MYSQL_ROOT_PASSWORD: root
+        MYSQL_ROOT_PASSWORD: password
         MYSQL_DATABASE: one-menu
-        MYSQL_USER: root
-        MYSQL_PASSWORD: password

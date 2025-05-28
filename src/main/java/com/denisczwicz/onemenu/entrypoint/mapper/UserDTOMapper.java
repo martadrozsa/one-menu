@@ -16,8 +16,8 @@ public class UserDTOMapper {
         return new UserModel(
                 userRequestDTO.name(),
                 userRequestDTO.email(),
-                userRequestDTO.password(),
                 userRequestDTO.login(),
+                userRequestDTO.password(),
                 userRequestDTO.address() != null ? addressDTOMapper.toModel(userRequestDTO.address()) : null);
     }
 

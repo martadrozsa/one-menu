@@ -21,8 +21,8 @@ public class UserMapper {
         UserEntity userEntity = UserEntity.builder()
                 .name(userModel.name())
                 .email(userModel.email())
-                .password(userModel.password())
                 .login(userModel.login())
+                .password(userModel.password())
                 .address(addressEntity)
                 .build();
 

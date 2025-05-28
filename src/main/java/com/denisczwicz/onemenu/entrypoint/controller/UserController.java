@@ -33,7 +33,7 @@ public class UserController {
     private final UserDTOMapper userDTOMapper;
 
 
-    @PostMapping
+    @PostMapping("/users")
     public void createUser(@RequestBody UserRequestDTO userRequest) {
         createUserUseCase.createUser(userDTOMapper.toModel(userRequest));
     }

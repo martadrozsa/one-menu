@@ -44,8 +44,11 @@ public class UserGatewayRepository implements UserGatewayPort {
     public UserModel updateUser(UserModel userModel, Long id) {
         return userRepository.findById(id)
                 .map(existingUser -> {
+
                     UserEntity updatedUser = userMapper.toEntity(userModel);
-                    updatedUser.setId(existingUser.getId()); // Ensure the ID remains the same
+                    updatedUser.setId(existingUser.getId());
+                    updatedUser.getAddress().setId(existingUser.getAddress().getId());
+
                     return userMapper.toModel(userRepository.save(updatedUser));
                 })
                 .orElse(null);
