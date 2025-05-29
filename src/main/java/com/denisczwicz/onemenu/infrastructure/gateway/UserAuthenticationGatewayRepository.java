@@ -16,7 +16,7 @@ public class UserAuthenticationGatewayRepository implements UserAuthenticationGa
     @Override
     public boolean validateCredentials(String login, String password) {
     try {
-            return userRepository.findByLoginAndPassword(login, password).isPresent();
+        return userRepository.existsByLoginAndPassword(login, password);
         } catch (Exception e) {
             log.error("Error validating credentials for user {}: {}", login, e.getMessage());
         }

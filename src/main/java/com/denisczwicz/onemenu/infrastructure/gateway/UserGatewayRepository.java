@@ -57,12 +57,29 @@ public class UserGatewayRepository implements UserGatewayPort {
 
         AddressEntity address = userEntity.getAddress();
 
-        address.setStreet(userModel.address().street());
-        address.setNumber(userModel.address().number());
-        address.setCity(userModel.address().city());
-        address.setState(userModel.address().state());
-        address.setCountry(userModel.address().country());
-        address.setPostalCode(userModel.address().postalCode());
+        if(userModel.address().street() != null) {
+            address.setStreet(userModel.address().street());
+        }
+
+        if(userModel.address().number() != null) {
+            address.setNumber(userModel.address().number());
+        }
+
+        if(userModel.address().city() != null) {
+            address.setCity(userModel.address().city());
+        }
+
+        if(userModel.address().state() != null) {
+            address.setState(userModel.address().state());
+        }
+
+        if(userModel.address().country() != null) {
+            address.setCountry(userModel.address().country());
+        }
+
+        if(userModel.address().postalCode() != null) {
+            address.setPostalCode(userModel.address().postalCode());
+        }
 
         UserEntity save = userRepository.save(userEntity);
 
