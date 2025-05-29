@@ -2,8 +2,9 @@ package com.denisczwicz.onemenu.application.usecase;
 
 import com.denisczwicz.onemenu.domain.model.UserModel;
 
-public interface UpdateUserUseCase {
+public interface UpdateUserCredentialsUseCase {
 
-    UserModel update(UserModel userModel, Long id);
+    UserModel updateCredentials(UserModel userModel, Long id);
 
 }
+

@@ -4,37 +4,49 @@ import com.denisczwicz.onemenu.application.usecase.CreateUserUseCase;
 import com.denisczwicz.onemenu.application.usecase.DeleteUserUseCase;
 import com.denisczwicz.onemenu.application.usecase.GetAllUsersUseCase;
 import com.denisczwicz.onemenu.application.usecase.GetUserUseCase;
-import com.denisczwicz.onemenu.application.usecase.UpdateUserUseCase;
+import com.denisczwicz.onemenu.application.usecase.UpdateUserCredentialsUseCase;
+import com.denisczwicz.onemenu.application.usecase.UpdateUserProfileUseCase;
 import com.denisczwicz.onemenu.domain.model.UserModel;
-import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.CreateUserRequestDTO;
-import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserProfileRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserResponseDTO;
 import com.denisczwicz.onemenu.entrypoint.mapper.UserDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @AllArgsConstructor
-@RestController
+@RestController()
+@RequestMapping("/users")
 public class UserController {
 
     private final CreateUserUseCase createUserUseCase;
     private final GetAllUsersUseCase getAllUsersUseCase;
     private final GetUserUseCase getUserUseCase;
-    private final UpdateUserUseCase updateUserUseCase;
+    private final UpdateUserProfileUseCase updateUserProfileUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
+    private final UpdateUserCredentialsUseCase updateUserCredentialsUseCase;
     private final UserDTOMapper userDTOMapper;
 
 
-    @PostMapping("/users")
-    public void createUser(@RequestBody CreateUserRequestDTO createUserRequestDTO) {
+    @PostMapping
+    public void createUser(
+            @RequestBody CreateUserRequestDTO createUserRequestDTO
+    ) {
         createUserUseCase.createUser(userDTOMapper.toModel(createUserRequestDTO));
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<UserResponseDTO> getAllUsers() {
 
         return getAllUsersUseCase.getAllUsers()
@@ -43,18 +55,24 @@ public class UserController {
                 .toList();
     }
 
-    @GetMapping("/users/{id}")
-    public UserResponseDTO getUserById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public UserResponseDTO getUserById(
+            @PathVariable Long id
+    ) {
         return userDTOMapper.toResponseDTO(getUserUseCase.getUserById(id));
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequestDTO updateUserRequestDTO) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> updateUser(
+            @PathVariable Long id,
+            @RequestBody UpdateUserProfileRequestDTO updateUserRequestDTO
+    ) {
         if (id == null) {
             return ResponseEntity.notFound().build();
         }
 
-        UserModel updatedUser = updateUserUseCase.update(userDTOMapper.toModel(updateUserRequestDTO), id);
+        UserModel updatedUser = updateUserProfileUseCase.updateProfile(userDTOMapper.toModel(updateUserRequestDTO), id);
+
         if (updatedUser == null) {
             return ResponseEntity.notFound().build();
         }
@@ -64,7 +82,7 @@ public class UserController {
         return ResponseEntity.ok(userResponseDTO);
     }
 
-    @DeleteMapping("users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable Long id) {
         UserModel userModel = getUserUseCase.getUserById(id);
         if (userModel == null) {
@@ -75,22 +93,24 @@ public class UserController {
         return ResponseEntity.ok(userDTOMapper.toResponseDTO(userModel));
     }
 
-//    @PatchMapping("users/{id}/credentials")
-//    public ResponseEntity<Void> updateUserCredentials(
-//            @PathVariable Long id,
-//            @RequestBody CredentialsRequestDTO credentialsRequestDTO) {
-//
-//        UserModel userModel = getUserUseCase.getUserById(id);
-//        if (userModel == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//
-//        updateUserUseCase.update(userModel, id);
-//        return ResponseEntity.ok(userDTOMapper.toResponseDTO(updatedUser));
-//    }
+    @PatchMapping("/{id}/credentials")
+    public ResponseEntity<UserResponseDTO> updateUserCredentials(
+            @PathVariable Long id,
+            @RequestBody CredentialsRequestDTO credentialsRequestDTO
+    ) {
+        if (id == null) {
+            return ResponseEntity.notFound().build();
+        }
 
+        UserModel updatedUserCredentials = updateUserCredentialsUseCase.updateCredentials(
+                userDTOMapper.toModel(credentialsRequestDTO), id);
 
+        if (updatedUserCredentials == null) {
+            return ResponseEntity.notFound().build();
+        }
 
+        UserResponseDTO userResponseDTO = userDTOMapper.toResponseDTO(updatedUserCredentials);
 
+        return ResponseEntity.ok(userResponseDTO);
+    }
 }

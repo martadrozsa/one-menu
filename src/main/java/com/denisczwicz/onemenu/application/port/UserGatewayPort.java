@@ -12,8 +12,10 @@ public interface UserGatewayPort {
 
     UserModel getUserById(Long id);
 
-    UserModel updateUser(UserModel userModel, Long id);
+    UserModel updateProfileUser(UserModel userModel, Long id);
 
     void deleteUser(Long id);
+
+    UserModel updateCredentials(UserModel userModel, Long id);
 
 }

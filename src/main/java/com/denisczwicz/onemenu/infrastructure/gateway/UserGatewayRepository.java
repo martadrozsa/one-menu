@@ -43,7 +43,7 @@ public class UserGatewayRepository implements UserGatewayPort {
     }
 
     @Override
-    public UserModel updateUser(UserModel userModel, Long id) {
+    public UserModel updateProfileUser(UserModel userModel, Long id) {
         Optional<UserEntity> foundUser = userRepository.findById(id);
 
         if (foundUser.isEmpty()) {
@@ -67,7 +67,6 @@ public class UserGatewayRepository implements UserGatewayPort {
         UserEntity save = userRepository.save(userEntity);
 
         return userMapper.toModel(save);
-
     }
 
     @Override
@@ -75,6 +74,24 @@ public class UserGatewayRepository implements UserGatewayPort {
         userRepository.findById(id)
                 .ifPresent(userRepository::delete);
 
+    }
+
+    @Override
+    public UserModel updateCredentials(UserModel userModel, Long id) {
+        Optional<UserEntity> foundUser = userRepository.findById(id);
+
+        if (foundUser.isEmpty()) {
+            return null;
+        }
+
+        UserEntity userEntity = foundUser.get();
+
+        userEntity.setLogin(userModel.login());
+        userEntity.setPassword(userModel.password());
+
+        UserEntity save = userRepository.save(userEntity);
+
+        return userMapper.toModel(save);
     }
 
 }
