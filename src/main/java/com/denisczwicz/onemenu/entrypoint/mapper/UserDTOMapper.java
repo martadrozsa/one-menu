@@ -1,7 +1,8 @@
 package com.denisczwicz.onemenu.entrypoint.mapper;
 
 import com.denisczwicz.onemenu.domain.model.UserModel;
-import com.denisczwicz.onemenu.entrypoint.dtos.request.UserRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.CreateUserRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,14 +13,24 @@ public class UserDTOMapper {
 
     private final AddressDTOMapper addressDTOMapper;
 
-    public UserModel toModel(UserRequestDTO userRequestDTO) {
-        return new UserModel(
-                userRequestDTO.name(),
-                userRequestDTO.email(),
-                userRequestDTO.login(),
-                userRequestDTO.password(),
-                userRequestDTO.address() != null ? addressDTOMapper.toModel(userRequestDTO.address()) : null);
+    public UserModel toModel(CreateUserRequestDTO createUserRequestDTO) {
+        return UserModel.builder()
+                .name(createUserRequestDTO.name())
+                .email(createUserRequestDTO.email())
+                .login(createUserRequestDTO.login())
+                .password(createUserRequestDTO.password())
+                .address(addressDTOMapper.toModel(createUserRequestDTO.address()))
+                .build();
     }
+
+    public UserModel toModel(UpdateUserRequestDTO updateUserRequestDTO) {
+        return UserModel.builder()
+                .name(updateUserRequestDTO.name())
+                .email(updateUserRequestDTO.email())
+                .address(addressDTOMapper.toModel(updateUserRequestDTO.address()))
+                .build();
+    }
+
 
     public UserResponseDTO toResponseDTO(UserModel userModel) {
         return UserResponseDTO.builder()

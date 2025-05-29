@@ -3,7 +3,7 @@ package com.denisczwicz.onemenu.entrypoint.dtos.request;
 import lombok.Builder;
 
 @Builder
-public record LoginRequestDTO(
+public record CredentialsRequestDTO(
     String login,
     String password
 ) {

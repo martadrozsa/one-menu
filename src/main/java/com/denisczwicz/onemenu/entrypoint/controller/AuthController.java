@@ -1,7 +1,7 @@
 package com.denisczwicz.onemenu.entrypoint.controller;
 
 import com.denisczwicz.onemenu.application.usecase.ValidateUserCredentialsUseCase;
-import com.denisczwicz.onemenu.entrypoint.dtos.request.LoginRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserValidationResponseDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class AuthController {
     private final ValidateUserCredentialsUseCase validateUserCredentialsUseCase;
 
     @PostMapping("/login")
-    public ResponseEntity<UserValidationResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
+    public ResponseEntity<UserValidationResponseDTO> login(@RequestBody CredentialsRequestDTO loginRequest) {
         boolean isValid = validateUserCredentialsUseCase.validate(loginRequest.login(), loginRequest.password());
 
         if (isValid) {

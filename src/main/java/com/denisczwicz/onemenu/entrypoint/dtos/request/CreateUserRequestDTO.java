@@ -3,14 +3,14 @@ package com.denisczwicz.onemenu.entrypoint.dtos.request;
 import lombok.Builder;
 
 @Builder
-public record UserRequestDTO(
+public record CreateUserRequestDTO(
         String name,
         String email,
         String login,
         String password,
         AddressRequestDTO address
 ) {
-    public UserRequestDTO {
+    public CreateUserRequestDTO {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or blank");
         }

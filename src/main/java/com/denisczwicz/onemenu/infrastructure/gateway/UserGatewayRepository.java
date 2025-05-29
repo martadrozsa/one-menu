@@ -3,6 +3,7 @@ package com.denisczwicz.onemenu.infrastructure.gateway;
 import com.denisczwicz.onemenu.application.port.UserGatewayPort;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.infrastructure.database.UserRepository;
+import com.denisczwicz.onemenu.infrastructure.database.entity.AddressEntity;
 import com.denisczwicz.onemenu.infrastructure.database.entity.UserEntity;
 import com.denisczwicz.onemenu.infrastructure.mapper.UserMapper;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -42,16 +44,30 @@ public class UserGatewayRepository implements UserGatewayPort {
 
     @Override
     public UserModel updateUser(UserModel userModel, Long id) {
-        return userRepository.findById(id)
-                .map(existingUser -> {
+        Optional<UserEntity> foundUser = userRepository.findById(id);
 
-                    UserEntity updatedUser = userMapper.toEntity(userModel);
-                    updatedUser.setId(existingUser.getId());
-                    updatedUser.getAddress().setId(existingUser.getAddress().getId());
+        if (foundUser.isEmpty()) {
+           return null;
+        }
 
-                    return userMapper.toModel(userRepository.save(updatedUser));
-                })
-                .orElse(null);
+        UserEntity userEntity = foundUser.get();
+
+        userEntity.setName(userModel.name());
+        userEntity.setEmail(userModel.email());
+
+        AddressEntity address = userEntity.getAddress();
+
+        address.setStreet(userModel.address().street());
+        address.setNumber(userModel.address().number());
+        address.setCity(userModel.address().city());
+        address.setState(userModel.address().state());
+        address.setCountry(userModel.address().country());
+        address.setPostalCode(userModel.address().postalCode());
+
+        UserEntity save = userRepository.save(userEntity);
+
+        return userMapper.toModel(save);
+
     }
 
     @Override
