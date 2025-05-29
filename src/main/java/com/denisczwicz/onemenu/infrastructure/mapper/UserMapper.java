@@ -1,13 +1,10 @@
 package com.denisczwicz.onemenu.infrastructure.mapper;
 
-import com.denisczwicz.onemenu.domain.model.AddressModel;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.infrastructure.database.entity.AddressEntity;
 import com.denisczwicz.onemenu.infrastructure.database.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component
