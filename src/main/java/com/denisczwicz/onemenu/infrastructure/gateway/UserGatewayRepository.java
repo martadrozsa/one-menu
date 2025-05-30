@@ -13,9 +13,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Component
@@ -35,12 +35,10 @@ public class UserGatewayRepository implements UserGatewayPort {
 
         //TODO: persist roles
 
-        Set<RoleEntity> allByPermissionIn = roleRepository.findAllByPermissionIn(userModel.roles());
-        // TODO: checar se a quantidade de permissões é igual a quantidade de roles solicitadas
-        // TODO: se não for, lançar uma exceção
+        List<RoleEntity> allByPermissionIn = roleRepository.findAllByPermissionIn(userModel.roles());
 
         UserEntity userEntity = userMapper.toEntity(userModel);
-        userEntity.setRoles(allByPermissionIn);
+        userEntity.setRoles(new HashSet<>(allByPermissionIn));
 
         UserEntity savedUser = userRepository.save(userEntity);
 
