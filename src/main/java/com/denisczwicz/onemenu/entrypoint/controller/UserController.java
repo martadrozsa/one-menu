@@ -12,6 +12,7 @@ import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserProfileRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserResponseDTO;
 import com.denisczwicz.onemenu.entrypoint.mapper.UserDTOMapper;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +42,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(
-            @RequestBody CreateUserRequestDTO createUserRequestDTO
+            @RequestBody @Valid CreateUserRequestDTO createUserRequestDTO
     ) {
         UserModel userDTOMapperModel = userDTOMapper.toModel(createUserRequestDTO);
         createUserUseCase.createUser(userDTOMapperModel);
