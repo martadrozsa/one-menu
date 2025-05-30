@@ -39,7 +39,6 @@ public class UserDTOMapper {
                 .build();
     }
 
-
     public UserResponseDTO toResponseDTO(UserModel userModel) {
         return UserResponseDTO.builder()
                 .name(userModel.name())

@@ -28,4 +28,25 @@ public class AddressMapper {
                 addressEntity.getPostalCode()
         );
     }
+
+    public void updateAddressEntityFromModel(AddressEntity address, AddressModel addressModel) {
+        if (addressModel.street() != null) {
+            address.setStreet(addressModel.street());
+        }
+        if (addressModel.number() != null) {
+            address.setNumber(addressModel.number());
+        }
+        if (addressModel.city() != null) {
+            address.setCity(addressModel.city());
+        }
+        if (addressModel.state() != null) {
+            address.setState(addressModel.state());
+        }
+        if (addressModel.country() != null) {
+            address.setCountry(addressModel.country());
+        }
+        if (addressModel.postalCode() != null) {
+            address.setPostalCode(addressModel.postalCode());
+        }
+    }
 }

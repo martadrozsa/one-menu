@@ -40,10 +40,15 @@ public class UserController {
 
 
     @PostMapping
-    public void createUser(
+    public ResponseEntity<UserResponseDTO> createUser(
             @RequestBody CreateUserRequestDTO createUserRequestDTO
     ) {
-        createUserUseCase.createUser(userDTOMapper.toModel(createUserRequestDTO));
+        UserModel userDTOMapperModel = userDTOMapper.toModel(createUserRequestDTO);
+        createUserUseCase.createUser(userDTOMapperModel);
+
+        UserResponseDTO userResponseDTO = userDTOMapper.toResponseDTO(userDTOMapperModel);
+
+        return ResponseEntity.ok(userResponseDTO);
     }
 
     @GetMapping

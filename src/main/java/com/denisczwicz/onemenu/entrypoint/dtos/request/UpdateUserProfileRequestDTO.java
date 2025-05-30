@@ -2,7 +2,7 @@ package com.denisczwicz.onemenu.entrypoint.dtos.request;
 
 import lombok.Builder;
 
-@Builder
+@Builder(toBuilder = true)
 public record UpdateUserProfileRequestDTO(
         String name,
         String email,

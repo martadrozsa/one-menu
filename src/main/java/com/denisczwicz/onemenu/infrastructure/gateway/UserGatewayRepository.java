@@ -5,6 +5,7 @@ import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.infrastructure.database.UserRepository;
 import com.denisczwicz.onemenu.infrastructure.database.entity.AddressEntity;
 import com.denisczwicz.onemenu.infrastructure.database.entity.UserEntity;
+import com.denisczwicz.onemenu.infrastructure.mapper.AddressMapper;
 import com.denisczwicz.onemenu.infrastructure.mapper.UserMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,16 @@ public class UserGatewayRepository implements UserGatewayPort {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AddressMapper addressMapper;
 
     @Transactional
     @Override
-    public void createUser(UserModel userModel) {
+    public UserModel createUser(UserModel userModel) {
         UserEntity userEntity = userMapper.toEntity(userModel);
-        userRepository.save(userEntity);
+
+        UserEntity savedUser = userRepository.save(userEntity);
+
+        return userMapper.toModel(savedUser);
     }
 
     @Override
@@ -57,29 +62,7 @@ public class UserGatewayRepository implements UserGatewayPort {
 
         AddressEntity address = userEntity.getAddress();
 
-        if(userModel.address().street() != null) {
-            address.setStreet(userModel.address().street());
-        }
-
-        if(userModel.address().number() != null) {
-            address.setNumber(userModel.address().number());
-        }
-
-        if(userModel.address().city() != null) {
-            address.setCity(userModel.address().city());
-        }
-
-        if(userModel.address().state() != null) {
-            address.setState(userModel.address().state());
-        }
-
-        if(userModel.address().country() != null) {
-            address.setCountry(userModel.address().country());
-        }
-
-        if(userModel.address().postalCode() != null) {
-            address.setPostalCode(userModel.address().postalCode());
-        }
+        addressMapper.updateAddressEntityFromModel(address, userModel.address());
 
         UserEntity save = userRepository.save(userEntity);
 

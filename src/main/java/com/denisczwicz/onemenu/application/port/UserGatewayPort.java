@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserGatewayPort {
 
-    void createUser(UserModel userModel);
+    UserModel createUser(UserModel userModel);
 
     List<UserModel> getAllUsers();
 

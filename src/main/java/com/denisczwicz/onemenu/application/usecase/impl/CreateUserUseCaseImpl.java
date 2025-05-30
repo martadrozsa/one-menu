@@ -13,8 +13,8 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     private final UserGatewayPort userGatewayPort;
 
     @Override
-    public void createUser(UserModel userModel) {
-        userGatewayPort.createUser(userModel);
+    public UserModel createUser(UserModel userModel) {
+        return userGatewayPort.createUser(userModel);
     }
 
 }

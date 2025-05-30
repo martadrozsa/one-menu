@@ -4,6 +4,6 @@ import com.denisczwicz.onemenu.domain.model.UserModel;
 
 public interface CreateUserUseCase {
 
-    void createUser(UserModel userModel);
+    UserModel createUser(UserModel userModel);
 
 }

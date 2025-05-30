@@ -12,6 +12,4 @@ public record UserModel(
         String login,
         String password,
         AddressModel address
-        //private UserRole role;
-
 ) { }
