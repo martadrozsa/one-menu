@@ -2,13 +2,16 @@ package com.denisczwicz.onemenu.entrypoint.dtos.request;
 
 import lombok.Builder;
 
+import java.util.Set;
+
 @Builder(toBuilder = true)
 public record CreateUserRequestDTO(
         String name,
         String email,
         String login,
         String password,
-        AddressRequestDTO address
+        AddressRequestDTO address,
+        Set<String> roles
 ) {
     public CreateUserRequestDTO {
         if (name == null || name.isBlank()) {

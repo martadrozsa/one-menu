@@ -2,8 +2,7 @@ package com.denisczwicz.onemenu.domain.model;
 
 import lombok.Builder;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Builder(toBuilder = true)
 public record UserModel(
@@ -11,5 +10,6 @@ public record UserModel(
         String email,
         String login,
         String password,
-        AddressModel address
+        AddressModel address,
+        Set<String> roles
 ) { }

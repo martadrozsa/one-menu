@@ -1,7 +1,8 @@
 package com.denisczwicz.onemenu.entrypoint.dtos.response;
 
-import com.denisczwicz.onemenu.entrypoint.dtos.request.AddressRequestDTO;
 import lombok.Builder;
+
+import java.util.Set;
 
 @Builder(toBuilder = true)
 public record UserResponseDTO(
@@ -9,7 +10,6 @@ public record UserResponseDTO(
         String email,
         String login,
         String password,
-        AddressRequestDTO address
-) {
-
-}
+        AddressResponseDTO address,
+        Set<String> roles
+) { }

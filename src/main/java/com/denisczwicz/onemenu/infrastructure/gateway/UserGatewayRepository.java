@@ -1,9 +1,11 @@
 package com.denisczwicz.onemenu.infrastructure.gateway;
 
 import com.denisczwicz.onemenu.application.port.UserGatewayPort;
+import com.denisczwicz.onemenu.domain.model.RoleModel;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.infrastructure.database.UserRepository;
 import com.denisczwicz.onemenu.infrastructure.database.entity.AddressEntity;
+import com.denisczwicz.onemenu.infrastructure.database.entity.RoleEntity;
 import com.denisczwicz.onemenu.infrastructure.database.entity.UserEntity;
 import com.denisczwicz.onemenu.infrastructure.mapper.AddressMapper;
 import com.denisczwicz.onemenu.infrastructure.mapper.UserMapper;
@@ -25,8 +27,13 @@ public class UserGatewayRepository implements UserGatewayPort {
     @Transactional
     @Override
     public UserModel createUser(UserModel userModel) {
-        UserEntity userEntity = userMapper.toEntity(userModel);
+//        if (userModel.roles() != null || !userModel.roles().isEmpty()) {
+//
+//        }
 
+        //TODO: persist roles
+
+        UserEntity userEntity = userMapper.toEntity(userModel);
         UserEntity savedUser = userRepository.save(userEntity);
 
         return userMapper.toModel(savedUser);

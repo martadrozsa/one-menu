@@ -21,6 +21,7 @@ public class UserDTOMapper {
                 .login(createUserRequestDTO.login())
                 .password(createUserRequestDTO.password())
                 .address(addressDTOMapper.toModel(createUserRequestDTO.address()))
+                .roles(createUserRequestDTO.roles())
                 .build();
     }
 
@@ -45,7 +46,8 @@ public class UserDTOMapper {
                 .email(userModel.email())
                 .login(userModel.login())
                 .password(userModel.password())
-                .address(addressDTOMapper.toRequestDTO(userModel.address()))
+                .address(addressDTOMapper.toResponseDTO(userModel.address()))
+                .roles(userModel.roles())
                 .build();
     }
 }

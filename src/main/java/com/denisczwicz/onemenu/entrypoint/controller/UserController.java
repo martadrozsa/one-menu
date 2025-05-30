@@ -45,9 +45,9 @@ public class UserController {
             @RequestBody @Valid CreateUserRequestDTO createUserRequestDTO
     ) {
         UserModel userDTOMapperModel = userDTOMapper.toModel(createUserRequestDTO);
-        createUserUseCase.createUser(userDTOMapperModel);
+        UserModel createdUser = createUserUseCase.createUser(userDTOMapperModel);
 
-        UserResponseDTO userResponseDTO = userDTOMapper.toResponseDTO(userDTOMapperModel);
+        UserResponseDTO userResponseDTO = userDTOMapper.toResponseDTO(createdUser);
 
         return ResponseEntity.ok(userResponseDTO);
     }
