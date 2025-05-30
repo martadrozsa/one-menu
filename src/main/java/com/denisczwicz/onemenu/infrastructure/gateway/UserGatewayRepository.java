@@ -1,8 +1,8 @@
 package com.denisczwicz.onemenu.infrastructure.gateway;
 
 import com.denisczwicz.onemenu.application.port.UserGatewayPort;
-import com.denisczwicz.onemenu.domain.model.RoleModel;
 import com.denisczwicz.onemenu.domain.model.UserModel;
+import com.denisczwicz.onemenu.infrastructure.database.RoleRepository;
 import com.denisczwicz.onemenu.infrastructure.database.UserRepository;
 import com.denisczwicz.onemenu.infrastructure.database.entity.AddressEntity;
 import com.denisczwicz.onemenu.infrastructure.database.entity.RoleEntity;
@@ -15,12 +15,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Component
 public class UserGatewayRepository implements UserGatewayPort {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final AddressMapper addressMapper;
 
@@ -33,7 +35,13 @@ public class UserGatewayRepository implements UserGatewayPort {
 
         //TODO: persist roles
 
+        Set<RoleEntity> allByPermissionIn = roleRepository.findAllByPermissionIn(userModel.roles());
+        // TODO: checar se a quantidade de permissões é igual a quantidade de roles solicitadas
+        // TODO: se não for, lançar uma exceção
+
         UserEntity userEntity = userMapper.toEntity(userModel);
+        userEntity.setRoles(allByPermissionIn);
+
         UserEntity savedUser = userRepository.save(userEntity);
 
         return userMapper.toModel(savedUser);
