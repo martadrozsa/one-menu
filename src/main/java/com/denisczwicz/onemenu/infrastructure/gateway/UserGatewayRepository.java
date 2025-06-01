@@ -101,4 +101,14 @@ public class UserGatewayRepository implements UserGatewayPort {
         return userMapper.toModel(save);
     }
 
+    @Override
+    public boolean existsByLogin(String login) {
+        return userRepository.existsByLogin(login);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }

@@ -21,6 +21,14 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
             throw new BadRequestException("User must have at least one role");
         }
 
+        if (userGatewayPort.existsByLogin(userModel.login())) {
+            throw new BadRequestException("Login already exists");
+        }
+
+        if (userGatewayPort.existsByEmail(userModel.email())) {
+            throw new BadRequestException("Email already exists");
+        }
+
         boolean allPermissionsExist = roleGatewayPort.existAllPermission(userModel.roles());
         if (!allPermissionsExist) {
             throw new BadRequestException("Some permissions do not exist");

@@ -14,6 +14,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,9 +48,12 @@ public class UserEntity {
     private String email;
 
     @NotBlank(message = "Login cannot be blank")
+    @Size(min = 4, max = 10, message = "Login must be between 4 and 10 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Login can only contain letters, numbers, and underscores")
     private String login;
 
     @NotBlank(message = "Password cannot be blank")
+    @Size(min = 6, max = 15, message = "Password must be between 6 and 15 characters")
     private String password;
 
     @LastModifiedDate

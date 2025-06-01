@@ -18,4 +18,7 @@ public interface UserGatewayPort {
 
     UserModel updateCredentials(UserModel userModel, Long id);
 
+    boolean existsByLogin(String login);
+
+    boolean existsByEmail(String email);
 }
