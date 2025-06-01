@@ -1,6 +1,7 @@
 package com.denisczwicz.onemenu.infrastructure.config;
 
 import com.denisczwicz.onemenu.domain.exception.BadRequestException;
+import com.denisczwicz.onemenu.domain.exception.UserAlreadyExistsException;
 import com.denisczwicz.onemenu.domain.exception.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,12 @@ public class ControllerExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExists(UserAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(ex.getMessage()));
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         ex.getMostSpecificCause();
@@ -52,5 +59,18 @@ public class ControllerExceptionHandler {
         error.put("error", "Error parsing request body");
         error.put("detail", message);
         return ResponseEntity.badRequest().body(error);
+    }
+
+    /**
+     * Handles the case when a route is not found.
+     * This method is used to return a custom error (404 instead of default 500) response when a route does not exist.
+     *
+     * @param ex the exception that was thrown
+     * @return a ResponseEntity with a 404 status and an error message
+     */
+    @ExceptionHandler(org.springframework.web.servlet.NoHandlerFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoHandlerFoundException(org.springframework.web.servlet.NoHandlerFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("Route not found: " + ex.getRequestURL()));
     }
 }

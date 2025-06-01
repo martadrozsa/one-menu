@@ -6,9 +6,15 @@ spring:
     username: root
     password: password
     url: jdbc:mysql://localhost:3306/one-menu?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-
+  web:
+    resources:
+      add-mappings: false
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

@@ -4,6 +4,7 @@ import com.denisczwicz.onemenu.application.port.RoleGatewayPort;
 import com.denisczwicz.onemenu.application.port.UserGatewayPort;
 import com.denisczwicz.onemenu.application.usecase.CreateUserUseCase;
 import com.denisczwicz.onemenu.domain.exception.BadRequestException;
+import com.denisczwicz.onemenu.domain.exception.UserAlreadyExistsException;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,11 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         }
 
         if (userGatewayPort.existsByLogin(userModel.login())) {
-            throw new BadRequestException("Login already exists");
+            throw new UserAlreadyExistsException("Login already exists");
         }
 
         if (userGatewayPort.existsByEmail(userModel.email())) {
-            throw new BadRequestException("Email already exists");
+            throw new UserAlreadyExistsException("Email already exists");
         }
 
         boolean allPermissionsExist = roleGatewayPort.existAllPermission(userModel.roles());

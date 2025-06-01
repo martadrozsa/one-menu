@@ -1,2 +1,1 @@
-INSERT INTO role (permission) VALUES ('ADMIN') ON CONFLICT DO NOTHING;
-INSERT INTO role (permission) VALUES ('USER') ON CONFLICT DO NOTHING;
+INSERT IGNORE INTO role (id, permission) VALUES (1, 'ADMIN'), (2, 'USER');
