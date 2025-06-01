@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    username: root
-    password: password
-    url: jdbc:mysql://localhost:3306/one-menu?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:one-menu}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
   web:
     resources:
       add-mappings: false
