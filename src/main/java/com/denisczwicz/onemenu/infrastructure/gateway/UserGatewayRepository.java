@@ -29,12 +29,6 @@ public class UserGatewayRepository implements UserGatewayPort {
     @Transactional
     @Override
     public UserModel createUser(UserModel userModel) {
-//        if (userModel.roles() != null || !userModel.roles().isEmpty()) {
-//
-//        }
-
-        //TODO: persist roles
-
         List<RoleEntity> allByPermissionIn = roleRepository.findAllByPermissionIn(userModel.roles());
 
         UserEntity userEntity = userMapper.toEntity(userModel);

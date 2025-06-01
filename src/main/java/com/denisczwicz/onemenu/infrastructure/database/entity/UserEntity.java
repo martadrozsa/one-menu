@@ -38,12 +38,17 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name cannot be blank")
     private String name;
 
     @NotBlank
     @Email(message = "Invalid email format")
     private String email;
+
+    @NotBlank(message = "Login cannot be blank")
     private String login;
+
+    @NotBlank(message = "Password cannot be blank")
     private String password;
 
     @LastModifiedDate

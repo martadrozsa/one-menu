@@ -17,6 +17,10 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
     @Override
     public UserModel createUser(UserModel userModel) {
+        if (userModel.roles() == null || userModel.roles().isEmpty()) {
+            throw new BadRequestException("User must have at least one role");
+        }
+
         boolean allPermissionsExist = roleGatewayPort.existAllPermission(userModel.roles());
         if (!allPermissionsExist) {
             throw new BadRequestException("Some permissions do not exist");
