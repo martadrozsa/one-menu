@@ -8,7 +8,6 @@ import com.denisczwicz.onemenu.application.usecase.UpdateUserCredentialsUseCase;
 import com.denisczwicz.onemenu.application.usecase.UpdateUserProfileUseCase;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.CreateUserRequestDTO;
-import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdatePasswordRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserProfileRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserResponseDTO;
