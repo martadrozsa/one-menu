@@ -15,12 +15,11 @@ public class UpdateUserProfileUseCaseImpl implements UpdateUserProfileUseCase {
 
     @Override
     public UserModel updateProfile(UserModel user, Long id) {
-        UserModel userModel = userGatewayPort.updateProfileUser(user, id);
+        UserModel userModel = userGatewayPort.updateUserProfile(user, id);
 
         if (userModel == null) {
             throw new UserNotFoundException("User not found with id: " + id);
         }
-
         return userModel;
     }
 }

@@ -15,11 +15,10 @@ public class UserAuthenticationGatewayRepository implements UserAuthenticationGa
 
     @Override
     public boolean validateCredentials(String login, String password) {
-        //TODO: deveria ficar aqui esse log?
     try {
         return userRepository.existsByLoginAndPassword(login, password);
         } catch (Exception e) {
-            log.error("Error validating credentials for user {}: {}", login, e.getMessage());
+            log.error("Error validating credentials for user {}.", login, e);
         }
         return false;
     }

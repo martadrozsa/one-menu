@@ -1,6 +1,7 @@
 package com.denisczwicz.onemenu.infrastructure.gateway;
 
 import com.denisczwicz.onemenu.application.port.UserGatewayPort;
+import com.denisczwicz.onemenu.domain.exception.UserNotFoundException;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.infrastructure.database.RoleRepository;
 import com.denisczwicz.onemenu.infrastructure.database.UserRepository;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -29,13 +30,12 @@ public class UserGatewayRepository implements UserGatewayPort {
     @Transactional
     @Override
     public UserModel createUser(UserModel userModel) {
-        List<RoleEntity> allByPermissionIn = roleRepository.findAllByPermissionIn(userModel.roles());
+        List<RoleEntity> rolesEntities = roleRepository.findAllByPermissionIn(userModel.roles());
 
         UserEntity userEntity = userMapper.toEntity(userModel);
-        userEntity.setRoles(new HashSet<>(allByPermissionIn));
+        userEntity.setRoles(new HashSet<>(rolesEntities));
 
         UserEntity savedUser = userRepository.save(userEntity);
-
         return userMapper.toModel(savedUser);
     }
 
@@ -44,61 +44,46 @@ public class UserGatewayRepository implements UserGatewayPort {
         return userRepository.findAll()
                 .stream()
                 .map(userMapper::toModel)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
     public UserModel getUserById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::toModel)
-                .orElse(null);
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
     }
 
+    @Transactional
     @Override
-    public UserModel updateProfileUser(UserModel userModel, Long id) {
-        Optional<UserEntity> foundUser = userRepository.findById(id);
+    public UserModel updateUserProfile(UserModel userModel, Long id) {
+        UserEntity foundUser = getUserEntity(id);
+        foundUser.setName(userModel.name());
+        foundUser.setEmail(userModel.email());
 
-        if (foundUser.isEmpty()) {
-           return null;
-        }
-
-        UserEntity userEntity = foundUser.get();
-
-        userEntity.setName(userModel.name());
-        userEntity.setEmail(userModel.email());
-
-        AddressEntity address = userEntity.getAddress();
-
+        AddressEntity address = foundUser.getAddress();
         addressMapper.updateAddressEntityFromModel(address, userModel.address());
 
-        UserEntity save = userRepository.save(userEntity);
-
-        return userMapper.toModel(save);
+        UserEntity savedUser = userRepository.save(foundUser);
+        return userMapper.toModel(savedUser);
     }
 
+    @Transactional
     @Override
     public void deleteUser(Long id) {
-        userRepository.findById(id)
-                .ifPresent(userRepository::delete);
-
+        UserEntity user = getUserEntity(id);
+        userRepository.delete(user);
     }
 
+    @Transactional
     @Override
     public UserModel updateCredentials(UserModel userModel, Long id) {
-        Optional<UserEntity> foundUser = userRepository.findById(id);
+        UserEntity foundUser = getUserEntity(id);
+        foundUser.setLogin(userModel.login());
+        foundUser.setPassword(userModel.password());
 
-        if (foundUser.isEmpty()) {
-            return null;
-        }
-
-        UserEntity userEntity = foundUser.get();
-
-        userEntity.setLogin(userModel.login());
-        userEntity.setPassword(userModel.password());
-
-        UserEntity save = userRepository.save(userEntity);
-
-        return userMapper.toModel(save);
+        UserEntity savedUser = userRepository.save(foundUser);
+        return userMapper.toModel(savedUser);
     }
 
     @Override
@@ -109,6 +94,11 @@ public class UserGatewayRepository implements UserGatewayPort {
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    private UserEntity getUserEntity(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
     }
 
 }

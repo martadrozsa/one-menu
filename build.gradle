@@ -31,6 +31,8 @@ dependencies {
     // Database
     implementation("com.mysql:mysql-connector-j:$mysqlConnectorJVersion")
 
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocOpenapiVersion")
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompileOnly ("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor ("org.projectlombok:lombok:$lombokVersion")
