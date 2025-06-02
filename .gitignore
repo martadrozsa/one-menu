@@ -35,11 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-# Docker
-docker-compose.override.yml
-docker-compose.*.yml
-.dockerignore
-Dockerfile
-Dockerfile.*
-/docker/
