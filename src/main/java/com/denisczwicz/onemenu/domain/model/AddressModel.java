@@ -4,6 +4,7 @@ import lombok.Builder;
 
 @Builder(toBuilder = true)
 public record AddressModel(
+        Long id,
         String street,
         String number,
         String city,

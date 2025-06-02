@@ -22,6 +22,7 @@ public class AddressDTOMapper {
 
     public AddressResponseDTO toResponseDTO(AddressModel addressModel) {
         return AddressResponseDTO.builder()
+                .id(addressModel.id())
                 .street(addressModel.street())
                 .number(addressModel.number())
                 .city(addressModel.city())

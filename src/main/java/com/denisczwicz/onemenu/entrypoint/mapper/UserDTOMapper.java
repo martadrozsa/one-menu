@@ -42,6 +42,7 @@ public class UserDTOMapper {
 
     public UserResponseDTO toResponseDTO(UserModel userModel) {
         return UserResponseDTO.builder()
+                .id(userModel.id())
                 .name(userModel.name())
                 .email(userModel.email())
                 .login(userModel.login())

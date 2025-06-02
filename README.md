@@ -56,6 +56,6 @@ Para a execução local sem o uso de docker, é necessário disponibilizar uma i
 * DB_SCHEMA - nome do schema (valor definido: one-menu)
 
 ## Collections
-As collections do Postman estão disponíveis neste [link](https://drive.google.com/file/d/18x7YxRc4ZWv1jUIB72e0egLE2lWZCiYG/view?usp=drive_link). 
+As collections do Postman estão disponíveis neste [link](https://drive.google.com/file/d/157yT7G1bmS_ff0y8Yt4ljG3ynhPCP2Ii/view?usp=drive_link). 
 Faça o download e importe no Postman para testar os endpoints da API.
 

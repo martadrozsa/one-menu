@@ -20,6 +20,7 @@ public class AddressMapper {
 
     public AddressModel toModel(AddressEntity addressEntity) {
         return new AddressModel(
+                addressEntity.getId(),
                 addressEntity.getStreet(),
                 addressEntity.getNumber(),
                 addressEntity.getCity(),

@@ -6,6 +6,7 @@ import java.util.Set;
 
 @Builder(toBuilder = true)
 public record UserResponseDTO(
+        Long id,
         String name,
         String email,
         String login,

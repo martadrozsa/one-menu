@@ -34,6 +34,7 @@ public class UserMapper {
 
     public UserModel toModel(UserEntity userEntity) {
         return new UserModel(
+                userEntity.getId(),
                 userEntity.getName(),
                 userEntity.getEmail(),
                 userEntity.getLogin(),
