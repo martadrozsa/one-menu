@@ -79,7 +79,6 @@ public class UserGatewayRepository implements UserGatewayPort {
     @Override
     public UserModel updateCredentials(UserModel userModel, Long id) {
         UserEntity foundUser = getUserEntity(id);
-        foundUser.setLogin(userModel.login());
         foundUser.setPassword(userModel.password());
 
         UserEntity savedUser = userRepository.save(foundUser);

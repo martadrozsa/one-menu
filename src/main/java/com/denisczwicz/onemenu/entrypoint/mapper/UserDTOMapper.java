@@ -3,6 +3,7 @@ package com.denisczwicz.onemenu.entrypoint.mapper;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.CreateUserRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdatePasswordRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserProfileRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserResponseDTO;
 import lombok.AllArgsConstructor;
@@ -33,10 +34,9 @@ public class UserDTOMapper {
                 .build();
     }
 
-    public UserModel toModel(CredentialsRequestDTO credentialsRequestDTO) {
+    public UserModel toModel(UpdatePasswordRequestDTO updatePasswordRequestDTO) {
         return UserModel.builder()
-                .login(credentialsRequestDTO.login())
-                .password(credentialsRequestDTO.password())
+                .password(updatePasswordRequestDTO.password())
                 .build();
     }
 

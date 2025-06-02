@@ -9,6 +9,7 @@ import com.denisczwicz.onemenu.application.usecase.UpdateUserProfileUseCase;
 import com.denisczwicz.onemenu.domain.model.UserModel;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.CreateUserRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
+import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdatePasswordRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserProfileRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserResponseDTO;
 import com.denisczwicz.onemenu.entrypoint.mapper.UserDTOMapper;
@@ -30,7 +31,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController()
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final CreateUserUseCase createUserUseCase;
@@ -84,7 +85,7 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(
             @PathVariable Long id,
-            @RequestBody UpdateUserProfileRequestDTO updateUserRequestDTO
+            @RequestBody @Valid UpdateUserProfileRequestDTO updateUserRequestDTO
     ) {
         UserModel updatedUser = updateUserProfileUseCase.updateProfile(userDTOMapper.toModel(updateUserRequestDTO), id);
 
@@ -110,14 +111,14 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Update User Credentials - updates the credentials of a user by their ID.")
+    @Operation(summary = "Update User Password - updates the credentials of a user by their ID.")
     @PatchMapping("/{id}/credentials")
-    public ResponseEntity<UserResponseDTO> updateUserCredentials(
+    public ResponseEntity<UserResponseDTO> updateUserPassword(
             @PathVariable Long id,
-            @RequestBody CredentialsRequestDTO credentialsRequestDTO
+            @RequestBody @Valid UpdatePasswordRequestDTO updatePasswordRequestDTO
     ) {
         UserModel updatedUserCredentials = updateUserCredentialsUseCase.updateCredentials(
-                userDTOMapper.toModel(credentialsRequestDTO), id);
+                userDTOMapper.toModel(updatePasswordRequestDTO), id);
 
         if (updatedUserCredentials == null) {
             return ResponseEntity.notFound().build();
