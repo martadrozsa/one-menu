@@ -53,7 +53,6 @@ public class UserEntity {
     private String login;
 
     @NotBlank(message = "Password cannot be blank")
-    @Size(min = 6, max = 15, message = "Password must be between 6 and 15 characters")
     private String password;
 
     @LastModifiedDate
