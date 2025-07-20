@@ -2,7 +2,6 @@ package com.denisczwicz.onemenu.infrastructure.mapper;
 
 import com.denisczwicz.onemenu.infrastructure.database.entity.RoleEntity;
 import org.springframework.stereotype.Component;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 

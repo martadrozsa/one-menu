@@ -12,7 +12,6 @@ import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdatePasswordRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.UpdateUserProfileRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserResponseDTO;
 import com.denisczwicz.onemenu.entrypoint.mapper.UserDTOMapper;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController()
 @RequestMapping("/users")
-public class UserController {
+public class UserController implements UserControllerInterface{
 
     private final CreateUserUseCase createUserUseCase;
     private final GetAllUsersUseCase getAllUsersUseCase;
@@ -42,7 +41,7 @@ public class UserController {
     private final UserDTOMapper userDTOMapper;
 
 
-    @Operation(summary = "Create User - registers a new user in the system.")
+    @Override
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(
             @RequestBody @Valid CreateUserRequestDTO createUserRequestDTO
@@ -54,7 +53,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Get All Users - retrieves a list of all users in the system.")
+    @Override
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<UserResponseDTO> userResponseDTOList = getAllUsersUseCase.getAllUsers()
@@ -65,7 +64,7 @@ public class UserController {
         return ResponseEntity.ok(userResponseDTOList);
     }
 
-    @Operation(summary = "Get User by ID - retrieves a user's information based on their unique identifier.")
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(
             @PathVariable Long id
@@ -80,7 +79,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Update User Profile - updates the profile information of a user by their ID.")
+    @Override
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(
             @PathVariable Long id,
@@ -97,7 +96,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Delete User - deletes a user from the system by their ID.")
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable Long id) {
         UserModel userModel = getUserUseCase.getUserById(id);
@@ -110,7 +109,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Update User Password - updates the credentials of a user by their ID.")
+    @Override
     @PatchMapping("/{id}/credentials")
     public ResponseEntity<UserResponseDTO> updateUserPassword(
             @PathVariable Long id,

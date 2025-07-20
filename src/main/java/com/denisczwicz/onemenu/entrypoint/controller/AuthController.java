@@ -3,7 +3,6 @@ package com.denisczwicz.onemenu.entrypoint.controller;
 import com.denisczwicz.onemenu.application.usecase.ValidateUserCredentialsUseCase;
 import com.denisczwicz.onemenu.entrypoint.dtos.request.CredentialsRequestDTO;
 import com.denisczwicz.onemenu.entrypoint.dtos.response.UserValidationResponseDTO;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @AllArgsConstructor
 @RestController
-public class AuthController {
+public class AuthController implements AuthControllerInterface {
 
     private final ValidateUserCredentialsUseCase validateUserCredentialsUseCase;
 
-    @Operation(summary = "Authenticate User - validates user credentials for authentication.")
+    @Override
     @PostMapping("/authenticate")
     public ResponseEntity<UserValidationResponseDTO> authenticate(
             @RequestBody CredentialsRequestDTO loginRequest
